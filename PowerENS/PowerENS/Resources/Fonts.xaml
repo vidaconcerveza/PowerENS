@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PowerENS.Styles">
+    <FontFamily x:Key="Bold">pack://application;,,,/Fonts/#Bold</FontFamily>
+    <FontFamily x:Key="EBold">pack://application;,,,/Fonts/#EBold</FontFamily>
+    <FontFamily x:Key="Large">pack://application;,,,/Fonts/#Large</FontFamily>
+    <FontFamily x:Key="Medium">pack://application;,,,/Fonts/#Medium</FontFamily>
+
+
+    <!--Common Properties-->
+    <Style TargetType="{x:Type Label}" x:Key="Logo">
+        <Setter Property="FontFamily" Value="{StaticResource Bold}"/>
+        <Setter Property="FontSize" Value="32"/>
+    </Style>
+    
+    
+    <!-- Menu Buttons -->
+    <Style TargetType="{x:Type Button}" x:Key="MenuButtonText">
+        <Setter Property="FontFamily" Value="{StaticResource Bold}"/>
+        <Setter Property="FontSize" Value="22"/>
+    </Style>
+</ResourceDictionary>
