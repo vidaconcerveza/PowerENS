@@ -10,23 +10,18 @@ namespace PowerENS.KakaoAPI
     public class KakaoAPI
     {
        
-        private string _serviceUrl { get; set; }
-        private string _requestUrl { get; set; }
-        private string _authToken { get; set; }
-        private string _serverName { get; set; }
-        private int _service { get; set; }
-        private string _mobile { get; set; }
 
-        public string SendMessage(string _message, int _template)
+        public string SendMessage(string _authToken, string _serverName, int _service, string _mobile ,string _message, int _template)
         {
             try
             {
-                var client = new RestClient(_serviceUrl);
-                var request = new RestRequest(_requestUrl, Method.POST);
+                var client = new RestClient("https://talkapi.lgcns.com");
+                var request = new RestRequest("/request/kakao.json", Method.POST);
+
                 request.AddHeader("authToken", _authToken);
                 request.AddHeader("serverName", _serverName);
                 request.AddHeader("paymentType", "P");
-
+                
                 request.AddJsonBody(new { service = _service, mobile = _mobile, message = _message, template = _template });
 
                 IRestResponse response = client.Execute(request);

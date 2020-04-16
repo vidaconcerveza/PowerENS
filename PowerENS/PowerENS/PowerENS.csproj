@@ -84,6 +84,7 @@
     <Compile Include="Chart\SampleChart.cs" />
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Models\MainPageModel.cs" />
+    <Compile Include="Models\SettingPageModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
