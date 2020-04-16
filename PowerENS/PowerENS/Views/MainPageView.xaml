@@ -8,7 +8,8 @@
              xmlns:local="clr-namespace:PowerENS.Views"
              mc:Ignorable="d" 
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             d:DesignHeight="1080" d:DesignWidth="1920">
+             d:DesignHeight="1080" d:DesignWidth="1920" Loaded="MainPageLoaded"
+             >
     <Grid Background="#F1F4F5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -29,14 +30,14 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Current Voltage" FontSize="40" Margin="40 0 0 0"/>
-                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Voltage}" FontSize="120" 
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="I Average" FontSize="40" Margin="40 0 0 0"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Current}" FontSize="100" 
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Center"
                        Margin="0 0 30 0"
                        />
                 <Label Grid.Row="1" Grid.Column="2"
-                       Content="V"
+                       Content="A"
                        FontSize="80"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>

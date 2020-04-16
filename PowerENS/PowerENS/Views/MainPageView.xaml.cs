@@ -1,6 +1,8 @@
-﻿using PowerENS.ViewModels;
+﻿using LiveCharts;
+using PowerENS.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,18 @@ namespace PowerENS.Views
         {
             InitializeComponent();
             this.DataContext = new MainPageViewModel();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        //Chart Initializing...
+        private void MainPageLoaded(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
