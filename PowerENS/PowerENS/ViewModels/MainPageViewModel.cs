@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PowerENS.Chart;
-using System.ComponentModel;
 using System.Threading;
 using System.Data.SqlClient;
 using System.Data;
@@ -22,6 +21,7 @@ namespace PowerENS.ViewModels
         private double _axisMax;
         private double _axisMin;
         private double _current;
+        private double _power;
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
         public double AxisMax
@@ -52,6 +52,16 @@ namespace PowerENS.ViewModels
                 RaisePropertyChanged("Current");
             }
         }
+
+        public double Power
+        {
+            get { return _power; }
+            set
+            {
+                _power = value;
+                RaisePropertyChanged("Power");
+            }
+        }
         #endregion Chart Axis (Max, Min, Step, Unit, Value
 
         
@@ -60,7 +70,8 @@ namespace PowerENS.ViewModels
 
 
         Models.MainPageModel mainPageModel;
-        public ChartValues<SampleChart> ChartValues { get; set; }
+        public ChartValues<SampleChart> CurrentChartValues { get; set; }
+        public ChartValues<SampleChart> PowerChartValues { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
 
         public MainPageViewModel()
@@ -73,7 +84,8 @@ namespace PowerENS.ViewModels
 
             Charting.For<SampleChart>(mapper);
 
-            ChartValues = new ChartValues<SampleChart>();
+            CurrentChartValues = new ChartValues<SampleChart>();
+            PowerChartValues = new ChartValues<SampleChart>();
             DateTimeFormatter = value => new DateTime((long)value).ToString("HH:mm");
 
             AxisStep = TimeSpan.FromMinutes(15).Ticks;
@@ -85,7 +97,10 @@ namespace PowerENS.ViewModels
 
             
             if (IsReading)
-                Task.Factory.StartNew(ReadFromDB);
+                Task.Factory.StartNew(RenderCurrentChart);
+
+            if (IsReading)
+                Task.Factory.StartNew(RenderPowerChart);
         }
 
 
@@ -97,7 +112,7 @@ namespace PowerENS.ViewModels
 
         #region Chart rendering (simulation)
         // Chart Rendering When the page loaded.
-        private void ReadFromDB()
+        private void RenderCurrentChart()
         {
             SqlConnection conn = null;
             try
@@ -112,14 +127,14 @@ namespace PowerENS.ViewModels
                     
                     while (Sdr.Read())
                     {
-                        ChartValues.Add(new SampleChart
+                        CurrentChartValues.Add(new SampleChart
                         {
-                            DateTime = Sdr.GetDateTime(0).AddHours(15),
+                            DateTime = Sdr.GetDateTime(0).AddHours(9),
                             Value = Sdr.GetDouble(1),
                         });
                     }
 
-                    Current = Convert.ToDouble((ChartValues[0].Value.ToString("N2")));
+                    Current = Convert.ToDouble((CurrentChartValues[0].Value.ToString("N2")));
 
                     var now = DateTime.Now;
                     SetAxisLimits(now);
@@ -130,7 +145,7 @@ namespace PowerENS.ViewModels
                     }
 
                     Thread.Sleep(60000);
-                    ChartValues.Clear();                    
+                    CurrentChartValues.Clear();                    
                 }
             }
             catch(Exception ex)
@@ -145,6 +160,56 @@ namespace PowerENS.ViewModels
                 }
             }
         }
+
+        private void RenderPowerChart()
+        {
+            SqlConnection conn = null;
+            try
+            {
+                while (IsReading)
+                {
+                    conn = new SqlConnection(connString);
+                    conn.Open();
+
+                    SqlCommand Cmd = new SqlCommand("SELECT TOP (15) [TimestampUTC],[Value] FROM[ION_Data].[dbo].[vPower] ORDER BY TimestampUTC DESC", conn);
+                    SqlDataReader Sdr2 = Cmd.ExecuteReader();
+
+                    while (Sdr2.Read())
+                    {
+                        PowerChartValues.Add(new SampleChart
+                        {
+                            DateTime = Sdr2.GetDateTime(0).AddHours(9),
+                            Value = Sdr2.GetDouble(1),
+                        });
+                    }
+
+                    Power = Convert.ToDouble((PowerChartValues[0].Value.ToString("N2")));
+
+                    var now = DateTime.Now;
+                    SetAxisLimits(now);
+
+                    if (conn != null)
+                    {
+                        conn.Close();
+                    }
+
+                    Thread.Sleep(60000);
+                    PowerChartValues.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
         #endregion Chart Rendering
 
 

@@ -47,7 +47,7 @@
         <Border Grid.Row="1" Grid.Column="0" Padding="30" Margin="40 20 40 20" CornerRadius="40" Background="White">
             <lvc:CartesianChart Background="White" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
                 <lvc:CartesianChart.Series>
-                    <lvc:LineSeries Values="{Binding ChartValues}"
+                    <lvc:LineSeries Values="{Binding CurrentChartValues}"
                                     PointGeometry="{x:Null}"
                                     LineSmoothness="1"
                                     StrokeThickness="2"
@@ -66,6 +66,55 @@
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
         </Border>
+
+        <Border Grid.Row="0" Grid.Column="1" Margin="40 70 150 20" Background="White" CornerRadius="40 40 40 40">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Power" FontSize="40" Margin="40 0 0 0"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Power}" FontSize="100" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center"
+                       Margin="0 0 30 0"
+                       />
+                <Label Grid.Row="1" Grid.Column="2"
+                       Content="kWh"
+                       FontSize="80"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" Padding="30" Margin="40 20 40 20" CornerRadius="40" Background="White">
+            <lvc:CartesianChart Background="White" AnimationsSpeed="0:0:0.5" Hoverable="False" DataTooltip="{x:Null}">
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries Values="{Binding PowerChartValues}"
+                                    PointGeometry="{x:Null}"
+                                    LineSmoothness="1"
+                                    StrokeThickness="2"
+                                    Stroke="CornflowerBlue"
+                                    Fill="Transparent"></lvc:LineSeries>
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}"
+                              MaxValue="{Binding AxisMax}"
+                              MinValue="{Binding AxisMin}"
+                              Unit="{Binding AxisUnit}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="{Binding AxisStep}"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </Border>
+
 
     </Grid>
 </UserControl>

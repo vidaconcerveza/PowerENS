@@ -88,7 +88,7 @@
                 <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="BlueViolet" CornerRadius="40 40 0 0">
                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Admin Contact" FontSize="40" Margin="40 0 0 0"/>
                 </Border>
-                <TextBox Grid.Row="1" Grid.Column="0" BorderThickness="0" TextAlignment="Center" Text="{Binding AdminContact}" FontSize="60" VerticalAlignment="Center" Margin="20"/>
+                <TextBox Grid.Row="1" Grid.Column="0" BorderThickness="0" TextAlignment="Center" Text="{Binding Mobile}" FontSize="60" VerticalAlignment="Center" Margin="20"/>
                 <Button Content="SEND MESSAGE" Grid.Column="1" Grid.Row="1" 
                         Style="{StaticResource menuButton}"
                         Height="60"

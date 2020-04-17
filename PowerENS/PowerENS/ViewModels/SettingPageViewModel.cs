@@ -17,23 +17,35 @@ namespace PowerENS.ViewModels
         public RelayCommand SendMessageCommand { get; set; }
         PowerENS.KakaoAPI.KakaoAPI api = new KakaoAPI.KakaoAPI();
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        
 
         public SettingPageViewModel()
         {
             SendMessageCommand = new RelayCommand(SendMessage, CanSendMessage);
-            _authToken = "ILtYnk20FBrnmxItVEbdpg==";
-            _serverName = "vidaconcerveza";
-            _service = 2010042059;
-            _mobile = "01030171592";
-            _message = "Alarm01_Temp too High in the site 32 at 2";
+            _authToken = "dffjwyObkWj9rsLnS5H71Q==";
+            _serverName = "PowerENS";
+            _service = 2010042724;
+            _mobile = "";
+            _message = "UNICT님의 전력계통 상태 정보를 알려 드립니다.금일 발생기준 시간 9시입니다";
             _template = 10001;
         }
 
         private string _authToken { get; set; }
         private string _serverName { get; set; }
         private int _service { get; set; }
-        private string _mobile { get; set; }
+        private string _mobile;
+        public string Mobile
+        {
+            get
+            {
+                return _mobile;
+            }
+            set
+            {
+                _mobile = value;
+                RaisePropertyChanged("Mobile");
+            }
+        }
         private string _message { get; set; }
         private int _template { get; set; }
 
@@ -46,6 +58,15 @@ namespace PowerENS.ViewModels
         private bool CanSendMessage(object param)
         {
             return true;
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string propertyName = null)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
